@@ -502,7 +502,7 @@ public class LandmarkStorage implements Storable<LandmarkStorage> {
     /**
      * The factor is used to convert double values into more compact int values.
      */
-    double getFactor() {
+    public double getFactor() {
         return factor;
     }
 

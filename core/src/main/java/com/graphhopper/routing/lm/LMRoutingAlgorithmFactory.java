@@ -30,14 +30,10 @@ import static com.graphhopper.util.Parameters.Algorithms.AltRoute.*;
 
 public class LMRoutingAlgorithmFactory implements RoutingAlgorithmFactory {
     private final LandmarkStorage lms;
-    private final Weighting prepareWeighting;
-    private final int numBaseNodes;
     private int defaultActiveLandmarks;
 
     public LMRoutingAlgorithmFactory(LandmarkStorage lms) {
         this.lms = lms;
-        this.prepareWeighting = lms.getWeighting();
-        this.numBaseNodes = lms.getBaseNodes();
         this.defaultActiveLandmarks = Math.max(1, Math.min(lms.getLandmarkCount() / 2, 12));
     }
 
@@ -84,8 +80,8 @@ public class LMRoutingAlgorithmFactory implements RoutingAlgorithmFactory {
         }
     }
 
-    private LMApproximator getApproximator(Graph g, int activeLM, double epsilon) {
-        return new LMApproximator(g, prepareWeighting, numBaseNodes, lms, activeLM, lms.getFactor(), false).
+    public LMApproximator getApproximator(Graph g, int activeLM, double epsilon) {
+        return new LMApproximator(g, lms.getWeighting(), lms.getBaseNodes(), lms, activeLM, lms.getFactor(), false).
                 setEpsilon(epsilon);
     }
 }
