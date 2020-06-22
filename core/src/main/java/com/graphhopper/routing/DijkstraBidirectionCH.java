@@ -51,9 +51,13 @@ public class DijkstraBidirectionCH extends DijkstraBidirectionCHNoSOD {
         // We check for all 'incoming' edges if we can prove that the current node (that is about to be settled) is 
         // reached via a suboptimal path. We do this regardless of the CH level of the adjacent nodes.
         RoutingCHEdgeIterator iter = edgeExplorer.setBaseNode(entry.adjNode);
+        int baseLevel = entry.adjNode;
         while (iter.next()) {
             // no need to inspect the edge we are coming from
             if (iter.getEdge() == entry.edge) {
+                continue;
+            }
+            if (graph.getLevel(iter.getAdjNode()) <= baseLevel) {
                 continue;
             }
             int traversalId = getTraversalId(iter, reverse);
